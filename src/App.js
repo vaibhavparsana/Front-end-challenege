@@ -45,24 +45,22 @@ class App extends React.Component {
     });
   };
 
-  
-  
-
   render() {
     const { error, isLoaded, photos } = this.state;
-    
+
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
-     return (<div>
+      return (
+        <div>
           <img className="loadingImg" src={LoadingGif} alt="loading-gif" />
         </div>
-      )
+      );
     } else {
       return (
         <div className="App">
           {photos.map((picture, index) => (
-            <div className="container">
+            <div key={"photo-key-" + index} className="container">
               <Card className="card_content  h-100">
                 <Card.Body>
                   <div className="head-title">
@@ -72,7 +70,10 @@ class App extends React.Component {
                     </small>
                   </div>
 
-                  <Card.Img src={picture.links[0].href} />
+                  <Card.Img
+                    src={picture.links[0].href}
+                    alt={picture.data[0].title}
+                  />
 
                   <div className="d-flex justify-content-between align-pictures-center">
                     <div className="d-md-flex justify-content-md-start">
@@ -108,14 +109,16 @@ class App extends React.Component {
                           </svg>
                         )}
                       </button>
-                      
+
                       <a
                         className="btn"
                         type="button"
                         data-pgaction-redirection="0"
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={("https://www.facebook.com/sharer.php?u=").concat(picture.links[0].href)}
+                        href={"https://www.facebook.com/sharer.php?u=".concat(
+                          picture.links[0].href
+                        )}
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
